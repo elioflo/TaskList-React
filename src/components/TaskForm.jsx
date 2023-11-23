@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import { useRef } from 'react'
 import styled from 'styled-components'
 
 const Container = styled.div`
@@ -11,6 +13,7 @@ const Container = styled.div`
 const Button = styled.button`
   border: none;
   background-color: transparent;
+  color: rgba(25,25,225,1);
 `
 
 const Input = styled.input`
@@ -23,12 +26,23 @@ const Input = styled.input`
 `
 
 
-export default function TaskForm() {
+export default function TaskForm({ addTask }) {
+
+  const inputRef = useRef()
+
+  function getTask() {
+    const text = inputRef.current.value; 
+    return text.trim() !== '' ? {
+      isComplete: false,
+      description: text
+    }:null
+  }
+
   return (
     <Container>
-      <Input type="text" required/>
-      <Button>
-        <i className="fa-solid fa-square-plus fa-2xl" style={{ color:"grey"}}></i>
+      <Input type="text" ref={inputRef} required/>
+      <Button onClick={() => addTask(getTask())}>
+        <i className="fa-solid fa-square-plus fa-2xl"></i>
       </Button>
     </Container>
   )

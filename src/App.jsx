@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
 import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
 
@@ -21,12 +22,25 @@ const Title = styled.h1`
 `
 
 function App() {
+  
+  const [tasks, setTasks] = useState(JSON.parse(localStorage.getItem('tasks')) || [])
+  
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
   return (
     <Container>
       <TaskApp>
         <Title>Tareas</Title>
-        <TaskForm />
-        <TaskList />
+        <TaskForm 
+          addTask={(task) => task && setTasks([task, ...tasks])} 
+          />
+        <TaskList 
+          tasks={tasks} 
+          removeTask={(index) => setTasks(tasks.filter((_, i) => i !== index))}
+          toggleComplete={(index) => setTasks(tasks.map((task, i) =>i === index ? { ...task, isComplete: !task.isComplete } : task))}
+          />
       </TaskApp>
     </Container>
   )

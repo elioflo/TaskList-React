@@ -1,8 +1,13 @@
+/* eslint-disable react/prop-types */
 import styled from 'styled-components'
 
 const Boton = styled.button`
   border: none;
   background-color: transparent;
+`
+
+const BotonCheck = styled(Boton)`
+  color: rgba(0,120,0,1);
 `
 
 const Contenedor = styled.div`
@@ -17,20 +22,24 @@ const Task = styled.p`
   border: 1px solid rgba(0,0,0,.4);
   padding: .25rem .5rem;
   border-radius: .25rem;
-
-  ${({ complete }) => complete && `
-    background-color: rgba(0,150,0,.2);
-  `}
 `
 
-export default function TaskItem() {
+const TaskComplete = styled(Task)`
+  background-color: rgba(0,150,0,.2);
+`
+
+export default function TaskItem({task, remove, toggle}) {
   return (
     <Contenedor>
-      <Task complete={true}>tarea</Task>
-      <Boton>
-      <i className="fa-solid fa-square-check fa-lg"></i>
-      </Boton>
-      <Boton>
+      { task.isComplete? <TaskComplete> {task.description} </TaskComplete> : <Task>{task.description}</Task> }
+      { task.isComplete? 
+      <BotonCheck onClick={toggle}>
+        <i className="fa-solid fa-square-check fa-lg"></i>
+      </BotonCheck> :
+      <Boton onClick={toggle}>
+        <i className="fa-solid fa-square-check fa-lg"></i>
+      </Boton>}
+      <Boton onClick={remove}>
         <i className="fa-solid fa-trash-can fa-lg"></i>
       </Boton>
     </Contenedor>
