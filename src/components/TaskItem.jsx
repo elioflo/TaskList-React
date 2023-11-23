@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components'
 
-const Boton = styled.button`
+const Button = styled.button`
   border: none;
   background-color: transparent;
 `
 
-const BotonCheck = styled(Boton)`
+const ButtonCheck = styled(Button)`
   color: rgba(0,120,0,1);
 `
 
-const Contenedor = styled.div`
+const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: .25rem;
@@ -30,18 +30,18 @@ const TaskComplete = styled(Task)`
 
 export default function TaskItem({task, remove, toggle}) {
   return (
-    <Contenedor>
+    <Container>
       { task.isComplete? <TaskComplete> {task.description} </TaskComplete> : <Task>{task.description}</Task> }
       { task.isComplete? 
-      <BotonCheck onClick={toggle}>
+      <ButtonCheck onClick={toggle}>
         <i className="fa-solid fa-square-check fa-lg"></i>
-      </BotonCheck> :
-      <Boton onClick={toggle}>
+      </ButtonCheck> :
+      <Button onClick={toggle}>
         <i className="fa-solid fa-square-check fa-lg"></i>
-      </Boton>}
-      <Boton onClick={remove}>
+      </Button>}
+      <Button onClick={remove}>
         <i className="fa-solid fa-trash-can fa-lg"></i>
-      </Boton>
-    </Contenedor>
+      </Button>
+    </Container>
   )
 }
